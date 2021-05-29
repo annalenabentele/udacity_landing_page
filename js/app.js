@@ -29,10 +29,7 @@ const nav = document.querySelector('#navbar__list')
 function isElementInViewport (el) {
     var rect = el.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth) 
+        rect.top <= 150 && rect.bottom >= 150
     );
 }
 
@@ -46,11 +43,11 @@ function isElementInViewport (el) {
 
 function buildNav() {
 
-    for(const section of sections){
+    sections.forEach( section => {
         const li = document.createElement('li')
         li.innerHTML = `<a target="#${section.id}">${section.getAttribute('data-nav')}</a>`
         nav.appendChild(li)
-    }
+    })
 }
 
 /**
@@ -66,16 +63,16 @@ buildNav();
 
 // Scroll to section on link click
 
-nav.addEventListener('click', function (event) {
+nav.addEventListener('click', event  => {
     event.preventDefault();
     const sectionId = event.target.getAttribute("target")
     const targetSection = document.querySelector(`${sectionId}`)
-    targetSection.scrollIntoView();
+    targetSection.scrollIntoView({behavior: "smooth"});
   });
 
 // Set sections as active
 
-document.addEventListener('scroll', function () {
+document.addEventListener('scroll', () => {
 
     for(const section of sections){
         if(isElementInViewport(section)){
