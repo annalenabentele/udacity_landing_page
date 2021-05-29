@@ -27,7 +27,7 @@ const nav = document.querySelector('#navbar__list')
 */
 
 function isElementInViewport (el) {
-    var rect = el.getBoundingClientRect();
+    const rect = el.getBoundingClientRect();
     return (
         rect.top <= 150 && rect.bottom >= 150
     );
@@ -45,7 +45,7 @@ function buildNav() {
 
     sections.forEach( section => {
         const li = document.createElement('li')
-        li.innerHTML = `<a target="#${section.id}">${section.getAttribute('data-nav')}</a>`
+        li.innerHTML = `<a class="nav-item" target="#${section.id}">${section.getAttribute('data-nav')}</a>`
         nav.appendChild(li)
     })
 }
@@ -75,9 +75,12 @@ nav.addEventListener('click', event  => {
 document.addEventListener('scroll', () => {
 
     for(const section of sections){
+        const navItem = document.querySelector(`[target="#${section.id}"]`)
         if(isElementInViewport(section)){
+            navItem.classList.add('activ')
             section.classList.add('your-active-class')
         } else {
+            navItem.classList.remove('activ')
             section.classList.remove('your-active-class')
         }
     }
